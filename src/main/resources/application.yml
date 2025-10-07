@@ -1,0 +1,13 @@
+server:
+  port: 9092
+
+spring:
+  application:
+    name: document-service
+  data:
+    mongodb:
+      uri: mongodb+srv://parth9906:Parth9906@parthsachan.h5piq9c.mongodb.net/?retryWrites=true&w=majority&appName=ParthSachan
+      database: document-service
+
+jwt:
+  secret: VGhpcyBpcyBhIHZlcnkgc2VjdXJlIGFuZCB2YWxpZCBCYXNlNjQga2V5Lg==
