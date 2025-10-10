@@ -2,6 +2,7 @@ package com.parth_collab.document_service.controller;
 
 import com.parth_collab.document_service.model.UserDocument;
 import com.parth_collab.document_service.service.DocumentService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,14 +17,17 @@ public class DocumentController {
         this.service = service;
     }
 
+
     @PostMapping
-    public ResponseEntity<UserDocument> create(@RequestBody UserDocument doc) {
+    public ResponseEntity<UserDocument> create(@RequestBody UserDocument doc, @RequestHeader("X-User-Id") String userId) {
+        doc.setOwnerId(userId);
+
         return ResponseEntity.ok(service.createDocument(doc));
     }
 
-    @GetMapping("/owner/{ownerId}")
-    public ResponseEntity<List<UserDocument>> getByOwner(@PathVariable String ownerId) {
-        return ResponseEntity.ok(service.getAllDocumentsByOwner(ownerId));
+    @GetMapping("/owner/me")
+    public ResponseEntity<List<UserDocument>> getMyDocuments(HttpServletRequest request, @RequestHeader("X-User-Id") String userId) {
+        return ResponseEntity.ok(service.getAllDocumentsByOwner(userId));
     }
 
     @GetMapping("/{id}")
